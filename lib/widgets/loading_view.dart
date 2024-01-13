@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LoadingWidget extends StatelessWidget {
+class LoadingView extends StatelessWidget {
   final Color color;
   final String? text;
 
-  const LoadingWidget({super.key, this.color = Colors.black, this.text});
+  const LoadingView({super.key, this.color = Colors.black, this.text});
 
   @override
   Widget build(BuildContext context) {
