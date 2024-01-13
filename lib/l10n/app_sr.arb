@@ -1,0 +1,8 @@
+{
+    "error_empty_fields": "Молимо Вас попуните сва поља",
+    "error_title": "Грешка!",
+    "success_title": "Успех!",
+    "confirm_title": "Да ли сте сигурни?",
+    "okay": "У реду",
+    "cancel": "Одустани"
+}

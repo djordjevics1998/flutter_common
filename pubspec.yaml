@@ -8,9 +8,13 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  flutter_localizations:
+    sdk: flutter
   back_button_interceptor: ^7.0.0
+  device_info_plus: ^9.1.1
   flutter:
     sdk: flutter
+  http: ^1.1.2
 
 dev_dependencies:
   flutter_test:
