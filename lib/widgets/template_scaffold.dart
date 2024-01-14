@@ -10,12 +10,12 @@ abstract class TemplateScaffold extends StatelessWidget {
   final String? tabTitle, appbarTitle;
   final bool onlyBackButton, hideAllActions;
   final double minDisplayTopBarWidgetsWidth;
-  final void Function()? onAppbarTitlePressed;
+  final void Function()? onAppbarTitlePressed, onDefaultAppbarTitlePressed;
   final String Function(BuildContext context) onGenerateDefaultTabTitle, onGenerateDefaultAppbarTitle;
   final List<Widget> Function(BuildContext context) onGenerateDrawerList, onGenerateTopBarList;
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
-    this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
+    this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
     this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList});
 
   @override
@@ -31,7 +31,7 @@ abstract class TemplateScaffold extends StatelessWidget {
               titleSpacing: 0,
               title: Row(crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextButton(onPressed: onAppbarTitlePressed /*?? (onlyBackButton || hideAllActions ? null : () => _onHomePressed(context))*/, child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!)),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),
+                    TextButton(onPressed: onAppbarTitlePressed ?? (onlyBackButton || hideAllActions ? null : onDefaultAppbarTitlePressed), child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!)),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),
                     if(!onlyBackButton && !hideAllActions && minDisplayTopBarWidgetsWidth > 0) Expanded(child: LayoutBuilder(builder: (context, constraints) => constraints.maxWidth <= minDisplayTopBarWidgetsWidth ? Container() : Wrap(crossAxisAlignment: WrapCrossAlignment.center,
                       runAlignment: WrapAlignment.center,
                       spacing: 5,
