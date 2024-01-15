@@ -3,6 +3,7 @@ import 'backwards_view.dart';
 
 String _defaultOnGenerateDefaultTitle(BuildContext context) => '';
 List<Widget> _defaultOnGenerateWidgetList(BuildContext context) => const [];
+Widget _defaultOnGenerateWidget(BuildContext context, Widget body) => body;
 
 abstract class TemplateScaffold extends StatelessWidget {
   final OnBackPressed onBackPressed;
@@ -14,10 +15,11 @@ abstract class TemplateScaffold extends StatelessWidget {
   final void Function(BuildContext context)? onDefaultAppbarTitlePressed;
   final String Function(BuildContext context) onGenerateDefaultTabTitle, onGenerateDefaultAppbarTitle;
   final List<Widget> Function(BuildContext context) onGenerateDrawerList, onGenerateTopBarList;
+  final Widget Function(BuildContext context, Widget body) onGenerateBodyInjection;
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
     this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
-    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList});
+    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ abstract class TemplateScaffold extends StatelessWidget {
                     ),),),])
 
           ),
-          body: body,
+          body: onGenerateBodyInjection(context, body),
         )));
   }
 }
