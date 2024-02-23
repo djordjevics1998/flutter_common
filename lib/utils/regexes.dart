@@ -1,0 +1,1 @@
+const httpsRegex = r'^https?://[^]*$';//r'^h(t(t(ps?(:(/(/([^ ]*$)?)?)?)?)?)?)?'; // #TODO dolar znak cisti izgleda
