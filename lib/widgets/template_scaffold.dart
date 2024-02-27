@@ -16,10 +16,11 @@ abstract class TemplateScaffold extends StatelessWidget {
   final String Function(BuildContext context) onGenerateDefaultTabTitle, onGenerateDefaultAppbarTitle;
   final List<Widget> Function(BuildContext context) onGenerateDrawerList, onGenerateTopBarList;
   final Widget Function(BuildContext context, Widget body) onGenerateBodyInjection;
+  final Widget? floatingActionButton;
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
     this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
-    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget});
+    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ abstract class TemplateScaffold extends StatelessWidget {
 
           ),
           body: onGenerateBodyInjection(context, body),
+          floatingActionButton: floatingActionButton,
         )));
   }
 }
