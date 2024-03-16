@@ -14,6 +14,9 @@ class FlutterCommonLocalizationsEn extends FlutterCommonLocalizations {
   String get confirm_title => 'Are you sure?';
 
   @override
+  String get choose => 'Choose';
+
+  @override
   String get okay => 'Okay';
 
   @override

@@ -14,6 +14,9 @@ class FlutterCommonLocalizationsSr extends FlutterCommonLocalizations {
   String get confirm_title => 'Да ли сте сигурни?';
 
   @override
+  String get choose => 'Изабери';
+
+  @override
   String get okay => 'У реду';
 
   @override

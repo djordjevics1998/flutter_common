@@ -3,6 +3,7 @@
     "error_title": "Грешка!",
     "success_title": "Успех!",
     "confirm_title": "Да ли сте сигурни?",
+    "choose": "Изабери",
     "okay": "У реду",
     "cancel": "Одустани"
 }

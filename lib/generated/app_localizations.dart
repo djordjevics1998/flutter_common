@@ -110,6 +110,12 @@ abstract class FlutterCommonLocalizations {
   /// **'Are you sure?'**
   String get confirm_title;
 
+  /// No description provided for @choose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose'**
+  String get choose;
+
   /// No description provided for @okay.
   ///
   /// In en, this message translates to:
