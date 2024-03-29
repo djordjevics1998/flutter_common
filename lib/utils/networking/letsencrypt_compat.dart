@@ -28,28 +28,42 @@ Future<bool> _isDeviceLegacy() async {
   return false;
 }
 
-Future<void> addISRG_X1DefaultIfNeeded() async => await _isDeviceLegacy() ? await _addISRG_X1() : 1;
+void addAuthorities(List<CertificateAuthority> authorities) {
+  _authorities.addAll(authorities);
+}
 
-Future<SecurityContext> _addISRG_X1() async {
+final Set<CertificateAuthority> _authorities = {};
+
+Future<void> initAuthorities({List<CertificateAuthority> authorities = const []}) async {
+  if(kIsWeb) return;
+  _authorities.addAll(authorities);
+  _getSecurityContext();
+}
+
+Future<SecurityContext> _getSecurityContext() async {
   SecurityContext context = SecurityContext.defaultContext;
-  try {
-    List<int> bytes = utf8.encode(ISRG_X1);
-    context.setTrustedCertificatesBytes(bytes);
-    debugPrint('createHttpClient() - cert added!');
-  } on TlsException catch (e) {
-    if (e.osError?.message != null &&
-        e.osError!.message.contains('CERT_ALREADY_IN_HASH_TABLE')) {
-      debugPrint('createHttpClient() - cert already trusted! Skipping.');
-    } else {
-      debugPrint('createHttpClient().setTrustedCertificateBytes EXCEPTION: $e');
-      rethrow;
+  Set<CertificateAuthority> authorities = Set.from(_authorities);
+  if(await _isDeviceLegacy()) authorities.add(_ISRG_X1);
+  for(var auth in authorities) {
+    try {
+      List<int> bytes = utf8.encode(auth.text);
+      context.setTrustedCertificatesBytes(bytes);
+      //debugPrint('createHttpClient() - cert added!');
+    } on TlsException catch (_/*e*/) {
+      /*if (e.osError?.message != null &&
+          e.osError!.message.contains('CERT_ALREADY_IN_HASH_TABLE')) {
+        debugPrint('createHttpClient() - cert already trusted! Skipping.');
+      } else {
+        debugPrint('createHttpClient().setTrustedCertificateBytes EXCEPTION: $e');
+        rethrow;
+      }*/
     }
   }
   return context;
 }
 
 Future<T> withClientCompat<T>(Future<T> Function(http.Client) fn) async {
-  final http.Client client = await _isDeviceLegacy() ? IOClient(HttpClient(context: await _addISRG_X1())) : http.Client();
+  final http.Client client = !kIsWeb ? IOClient(HttpClient(context: await _getSecurityContext())) : http.Client();
   try {
     return await fn(client);
   } finally {
@@ -65,7 +79,7 @@ Future<T> withClientCompat<T>(Future<T> Function(http.Client) fn) async {
 /// this certificate manually to our HttpClient via SecurityContext so it can be
 /// used when connecting to URLs protected by LetsEncrypt SSL certificates.
 /// PEM format LE self-signed cert from here: https://letsencrypt.org/certificates/
-const String ISRG_X1 = """-----BEGIN CERTIFICATE-----
+const CertificateAuthority _ISRG_X1 = CertificateAuthority(text: """-----BEGIN CERTIFICATE-----
 MIIFazCCA1OgAwIBAgIRAIIQz7DSQONZRGPgu2OCiwAwDQYJKoZIhvcNAQELBQAw
 TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
 cmNoIEdyb3VwMRUwEwYDVQQDEwxJU1JHIFJvb3QgWDEwHhcNMTUwNjA0MTEwNDM4
@@ -95,4 +109,10 @@ oyi3B43njTOQ5yOf+1CceWxG1bQVs5ZufpsMljq4Ui0/1lvh+wjChP4kqKOJ2qxq
 4RgqsahDYVvTH9w7jXbyLeiNdd8XM2w9U/t7y0Ff/9yi0GE44Za4rF2LN9d11TPA
 mRGunUHBcnWEvgJBQl9nJEiU0Zsnvgc/ubhPgXRR4Xq37Z0j4r7g1SgEEzwxA57d
 emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
------END CERTIFICATE-----""";
+-----END CERTIFICATE-----""");
+
+class CertificateAuthority {
+  final String text;
+
+  const CertificateAuthority({required this.text});
+}
