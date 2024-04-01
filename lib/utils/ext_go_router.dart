@@ -12,7 +12,7 @@ void goOrReplace(BuildContext context, String route, {Map<String, String> pathPa
     context.go(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   } else {
     //context.pop();
-    kIsWeb ? window.location.reload() : context.pushReplacement(loc);
+    context.push(loc);
     //context.push(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
     //context.replace(/*GoRouterState.of(context).uri.toString()*/ loc);//GoRouter.of(context).location());//context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   }
