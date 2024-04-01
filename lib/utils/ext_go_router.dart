@@ -8,8 +8,9 @@ void goOrReplace(BuildContext context, String route, {Map<String, String> pathPa
   if(/*GoRouterState.of(context).uri.toString()*/loc != context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters)) {
     context.go(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   } else {
-    //context.pop();
-    context.replace(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
+    context.pop();
+    context.go(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
+    //context.push(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
     //context.replace(/*GoRouterState.of(context).uri.toString()*/ loc);//GoRouter.of(context).location());//context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   }
 }
