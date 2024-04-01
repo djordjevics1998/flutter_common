@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 void goOrReplace(BuildContext context, String route, {Map<String, String> pathParameters = const <String, String>{},
   Map<String, dynamic> queryParameters = const <String, dynamic>{},}) {
   final loc = GoRouter.of(context).location();
+  debugPrint(loc);
 
   if(/*GoRouterState.of(context).uri.toString()*/loc != context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters)) {
     context.go(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
