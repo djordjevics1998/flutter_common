@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LoadingView extends StatelessWidget {
-  final Color color;
+  final Color? color, textColor;
   final String? text;
 
-  const LoadingView({super.key, this.color = Colors.black, this.text});
+  const LoadingView({super.key, this.color, this.textColor, this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class LoadingView extends StatelessWidget {
       children: [
         Opacity(
           opacity: 0.8,
-          child: ModalBarrier(dismissible: false, color: color),
+          child: ModalBarrier(dismissible: false, color: color ?? Theme.of(context).colorScheme.surfaceVariant),
         ),
         Center(
           child: Padding(
@@ -21,13 +21,13 @@ class LoadingView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircularProgressIndicator(),
+                CircularProgressIndicator(color: textColor ?? Theme.of(context).colorScheme.onSurfaceVariant,),
                 if (text != null) ...[
                   const SizedBox(height: 5,),
                   Text(
                     text!,
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary),
+                        color: textColor ?? Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ],
               ],
