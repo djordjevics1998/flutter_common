@@ -23,7 +23,10 @@ void shareText(BuildContext context, String text, {String? clipboardText}) {
         }).onError(onErrorCallback);
       }
       else {
-        Share.share(text).onError(onErrorCallback);
+        Share.share(text).onError((error, stacktrace) {
+          onErrorCallback(error, stacktrace);
+          return ShareResult.unavailable;
+        });
       }
     }
   else {
