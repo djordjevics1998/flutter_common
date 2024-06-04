@@ -39,7 +39,7 @@ abstract class TemplateScaffold extends StatelessWidget {
                       spacing: 5,
                       children: [
                         TextButton(onPressed: onAppbarTitlePressed ?? (onlyBackButton || hideAllActions || onDefaultAppbarTitlePressed == null ? null : () => onDefaultAppbarTitlePressed!(context)), child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!, overflow: TextOverflow.fade, softWrap: false,)),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),)
-                        if(!onlyBackButton && !hideAllActions && minDisplayTopBarWidgetsWidth > 0 && constraints.maxWidth <= minDisplayTopBarWidgetsWidth) ...onGenerateTopBarList(context)]),
+                        if(!onlyBackButton && !hideAllActions && minDisplayTopBarWidgetsWidth > 0 && constraints.maxWidth > minDisplayTopBarWidgetsWidth) ...onGenerateTopBarList(context)]),
               ),
 
           ),
