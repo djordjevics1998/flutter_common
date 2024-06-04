@@ -35,7 +35,9 @@ abstract class TemplateScaffold extends StatelessWidget {
               titleSpacing: 0,
               title: Row(crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    TextButton(onPressed: onAppbarTitlePressed ?? (onlyBackButton || hideAllActions || onDefaultAppbarTitlePressed == null ? null : () => onDefaultAppbarTitlePressed!(context)), child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!, overflow: TextOverflow.fade, softWrap: false,)),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),
+                    Row(children: [
+                      Flexible(child: TextButton(onPressed: onAppbarTitlePressed ?? (onlyBackButton || hideAllActions || onDefaultAppbarTitlePressed == null ? null : () => onDefaultAppbarTitlePressed!(context)), child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!, overflow: TextOverflow.fade, softWrap: false,))),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),)
+                    ],),
                     if(!onlyBackButton && !hideAllActions && minDisplayTopBarWidgetsWidth > 0) Expanded(child: LayoutBuilder(builder: (context, constraints) => constraints.maxWidth <= minDisplayTopBarWidgetsWidth ? Container() : Wrap(crossAxisAlignment: WrapCrossAlignment.center,
                       runAlignment: WrapAlignment.center,
                       spacing: 5,
