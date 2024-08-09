@@ -24,6 +24,7 @@ void goOrReplaceByRouter(GoRouter router, String route, {Map<String, String> pat
 
 extension GoRouterExtension on GoRouter {
   String location() {
+    if(routerDelegate.currentConfiguration.matches.isEmpty) return '';
     final RouteMatch lastMatch = routerDelegate.currentConfiguration.last;
     final RouteMatchList matchList = lastMatch is ImperativeRouteMatch ? lastMatch.matches : routerDelegate.currentConfiguration;
     final String location = matchList.uri.toString();
