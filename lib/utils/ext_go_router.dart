@@ -4,15 +4,19 @@ import 'package:go_router/go_router.dart';
 import 'package:universal_html/html.dart';
 
 void goOrReplace(BuildContext context, String route, {Map<String, String> pathParameters = const <String, String>{},
+  Map<String, dynamic> queryParameters = const <String, dynamic>{},}) => goOrReplaceByRouter(GoRouter.of(context), route, pathParameters: pathParameters,
+  queryParameters: queryParameters);
+
+void goOrReplaceByRouter(GoRouter router, String route, {Map<String, String> pathParameters = const <String, String>{},
   Map<String, dynamic> queryParameters = const <String, dynamic>{},}) {
-  final loc = GoRouter.of(context).location();
+  final loc = router.location();
   //debugPrint(loc);
 
-  if(/*GoRouterState.of(context).uri.toString()*/loc != context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters)) {
-    context.go(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
+  if(/*GoRouterState.of(context).uri.toString()*/loc != router.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters)) {
+    router.go(router.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   } else {
     //context.pop();
-    context.push(loc);
+    router.push(loc);
     //context.push(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
     //context.replace(/*GoRouterState.of(context).uri.toString()*/ loc);//GoRouter.of(context).location());//context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   }
