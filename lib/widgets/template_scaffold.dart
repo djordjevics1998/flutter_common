@@ -16,10 +16,10 @@ abstract class TemplateScaffold extends StatelessWidget {
   final String Function(BuildContext context) onGenerateDefaultTabTitle, onGenerateDefaultAppbarTitle;
   final List<Widget> Function(BuildContext context) onGenerateDrawerList, onGenerateTopBarList;
   final Widget Function(BuildContext context, Widget body) onGenerateBodyInjection;
-  final Widget? floatingActionButton;
+  final Widget? floatingActionButton, appbarLeading;
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
-    this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
+    this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, this.appbarLeading, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
     this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget, this.floatingActionButton});
 
   @override
@@ -38,6 +38,7 @@ abstract class TemplateScaffold extends StatelessWidget {
                       runAlignment: WrapAlignment.center,
                       spacing: 5,
                       children: [
+                        if(appbarLeading != null) appbarLeading!,
                         TextButton(onPressed: onAppbarTitlePressed ?? (onlyBackButton || hideAllActions || onDefaultAppbarTitlePressed == null ? null : () => onDefaultAppbarTitlePressed!(context)), child: Text(appbarTitle ?? onGenerateDefaultAppbarTitle(context), style: Theme.of(context).textTheme.titleLarge!, overflow: TextOverflow.fade, softWrap: false,)),//.copyWith(color: Theme.of(context).colorScheme.onPrimary))),)
                         if(!onlyBackButton && !hideAllActions && minDisplayTopBarWidgetsWidth > 0 && constraints.maxWidth > minDisplayTopBarWidgetsWidth) ...onGenerateTopBarList(context)]),
               ),
