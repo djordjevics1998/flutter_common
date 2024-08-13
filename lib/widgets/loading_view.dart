@@ -12,7 +12,7 @@ class LoadingView extends StatelessWidget {
       children: [
         Opacity(
           opacity: 0.8,
-          child: ModalBarrier(dismissible: false, color: backgroundColor ?? Theme.of(context).colorScheme.onPrimary),
+          child: ModalBarrier(dismissible: false, color: backgroundColor ?? Theme.of(context).colorScheme.surface),
         ),
         Center(
           child: Padding(
@@ -21,13 +21,13 @@ class LoadingView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircularProgressIndicator(color: foregroundColor ?? Theme.of(context).colorScheme.primary,),
+                CircularProgressIndicator(color: foregroundColor ?? Theme.of(context).colorScheme.onSurface,),
                 if (text != null) ...[
                   const SizedBox(height: 5,),
                   Text(
                     text!,
                     style: TextStyle(
-                        color: foregroundColor ?? Theme.of(context).colorScheme.primary),
+                        color: foregroundColor ?? Theme.of(context).colorScheme.onSurface),
                   ),
                 ],
               ],
