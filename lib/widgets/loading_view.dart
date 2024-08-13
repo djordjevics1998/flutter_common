@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 class LoadingView extends StatelessWidget {
   final Color? backgroundColor, foregroundColor;
   final String? text;
+  final double opacity;
 
-  const LoadingView({super.key, this.backgroundColor, this.foregroundColor, this.text});
+  const LoadingView({super.key, this.backgroundColor, this.foregroundColor, this.text, this.opacity = 0.8});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Opacity(
-          opacity: 0.8,
+          opacity: opacity,
           child: ModalBarrier(dismissible: false, color: backgroundColor ?? Theme.of(context).colorScheme.surface),
         ),
         Center(
