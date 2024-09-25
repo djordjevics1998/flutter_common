@@ -7,6 +7,8 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_en.dart' deferred as app_localizations_en;
 import 'app_localizations_sr.dart' deferred as app_localizations_sr;
 
+// ignore_for_file: type=lint
+
 /// Callers can lookup localized strings with an instance of FlutterCommonLocalizations
 /// returned by `FlutterCommonLocalizations.of(context)`.
 ///
