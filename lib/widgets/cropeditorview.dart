@@ -7,7 +7,7 @@ class CropEditorWidget extends StatefulWidget {
   final Uint8List image;
   final double aspectRatio;
   final bool withCircleUi;
-  final void Function(Uint8List) onCropped;
+  final void Function(CropResult result) onCropped;
   final void Function() onCanceled;
   //final _cropController = CropController();
 
