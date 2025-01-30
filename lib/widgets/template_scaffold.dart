@@ -9,7 +9,7 @@ abstract class TemplateScaffold extends StatelessWidget {
   final OnBackPressed onBackPressed;
   final Widget body;
   final String? tabTitle, appbarTitle;
-  final bool onlyBackButton, hideAllActions;
+  final bool onlyBackButton, hideAllActions, hideAppBar;
   final double minDisplayTopBarWidgetsWidth;
   final void Function()? onAppbarTitlePressed;
   final void Function(BuildContext context)? onDefaultAppbarTitlePressed;
@@ -21,17 +21,18 @@ abstract class TemplateScaffold extends StatelessWidget {
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
     this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, this.onGenerateAppbarLeading, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
+    this.hideAppBar = false,
     this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
     return BackwardsView(onBackPressed: onBackPressed, child: Title(title: tabTitle ?? onGenerateDefaultTabTitle(context), color: Colors.black,
-        child:  Scaffold(drawer: onlyBackButton || hideAllActions ? null : Drawer(
+        child:  Scaffold(drawer: hideAppBar || onlyBackButton || hideAllActions ? null : Drawer(
           child: ListView(
             children: onGenerateDrawerList(context),
           ),
         ),
-          appBar: AppBar(
+          appBar: hideAppBar ? null : AppBar(
               leading: onlyBackButton && !hideAllActions ? IconButton(onPressed: () => onBackPressed(context), icon: const Icon(Icons.arrow_back)) : null,
               titleSpacing: 0,
               title: LayoutBuilder(builder: (context, constraints) =>
