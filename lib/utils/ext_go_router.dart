@@ -16,8 +16,7 @@ void goOrReplaceByRouter(GoRouter router, String route, {Map<String, String> pat
     router.go(router.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   } else {
     //context.pop();
-    //router.push(loc);
-    router.pushReplacement(loc);
+    router.push(loc);
     //context.push(context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
     //context.replace(/*GoRouterState.of(context).uri.toString()*/ loc);//GoRouter.of(context).location());//context.namedLocation(route, pathParameters: pathParameters, queryParameters: queryParameters));
   }
