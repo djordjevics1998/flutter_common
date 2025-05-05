@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 typedef OnBackPressed = Future<bool> Function(BuildContext context);
 
@@ -48,7 +49,7 @@ class _AndroidBackButtonState extends State<_AndroidBackButton> {
   @override
   void initState() {
     super.initState();
-    BackButtonInterceptor.add(interceptBackButton, context: context);
+    BackButtonInterceptor.add(interceptBackButton, context: context, ifNotYetIntercepted: true);
   }
 
   @override
@@ -62,8 +63,13 @@ class _AndroidBackButtonState extends State<_AndroidBackButton> {
 
   // inverse logic from WillPopScope
   Future<bool> interceptBackButton(
-      bool stopDefaultButtonEvent, RouteInfo routeInfo) async =>
-      routeInfo.ifRouteChanged(context)
-          ? true
-          : await widget.onBackPressed(context);
+      bool stopDefaultButtonEvent, RouteInfo routeInfo) async {
+    final shouldNotPop = routeInfo.ifRouteChanged(context)
+        ? true
+        : await widget.onBackPressed(context);
+    if(!shouldNotPop) {
+      SystemNavigator.pop(animated: true);
+    }
+    return true;
+  }
 }
