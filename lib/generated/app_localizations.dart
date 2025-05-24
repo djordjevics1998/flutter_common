@@ -61,15 +61,18 @@ import 'app_localizations_sr.dart' deferred as app_localizations_sr;
 /// be consistent with the languages listed in the FlutterCommonLocalizations.supportedLocales
 /// property.
 abstract class FlutterCommonLocalizations {
-  FlutterCommonLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  FlutterCommonLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
   static FlutterCommonLocalizations? of(BuildContext context) {
-    return Localizations.of<FlutterCommonLocalizations>(context, FlutterCommonLocalizations);
+    return Localizations.of<FlutterCommonLocalizations>(
+        context, FlutterCommonLocalizations);
   }
 
-  static const LocalizationsDelegate<FlutterCommonLocalizations> delegate = _FlutterCommonLocalizationsDelegate();
+  static const LocalizationsDelegate<FlutterCommonLocalizations> delegate =
+      _FlutterCommonLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -81,7 +84,8 @@ abstract class FlutterCommonLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -131,7 +135,8 @@ abstract class FlutterCommonLocalizations {
   String get cancel;
 }
 
-class _FlutterCommonLocalizationsDelegate extends LocalizationsDelegate<FlutterCommonLocalizations> {
+class _FlutterCommonLocalizationsDelegate
+    extends LocalizationsDelegate<FlutterCommonLocalizations> {
   const _FlutterCommonLocalizationsDelegate();
 
   @override
@@ -140,25 +145,28 @@ class _FlutterCommonLocalizationsDelegate extends LocalizationsDelegate<FlutterC
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'sr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'sr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_FlutterCommonLocalizationsDelegate old) => false;
 }
 
-Future<FlutterCommonLocalizations> lookupFlutterCommonLocalizations(Locale locale) {
-
-
+Future<FlutterCommonLocalizations> lookupFlutterCommonLocalizations(
+    Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return app_localizations_en.loadLibrary().then((dynamic _) => app_localizations_en.FlutterCommonLocalizationsEn());
-    case 'sr': return app_localizations_sr.loadLibrary().then((dynamic _) => app_localizations_sr.FlutterCommonLocalizationsSr());
+    case 'en':
+      return app_localizations_en.loadLibrary().then(
+          (dynamic _) => app_localizations_en.FlutterCommonLocalizationsEn());
+    case 'sr':
+      return app_localizations_sr.loadLibrary().then(
+          (dynamic _) => app_localizations_sr.FlutterCommonLocalizationsSr());
   }
 
   throw FlutterError(
-    'FlutterCommonLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+      'FlutterCommonLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

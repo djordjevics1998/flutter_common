@@ -46,6 +46,7 @@ flutter_gen:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
+  generate: true
 
   fonts:
     - family: Roboto
