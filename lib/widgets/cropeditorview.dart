@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:crop_your_image/crop_your_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_common/generated/app_localizations.dart';
+import 'package:flutter_common/widgets/loading_view.dart';
 
 class CropEditorWidget extends StatefulWidget {
   final Uint8List image;
@@ -23,11 +24,32 @@ class CropEditorWidget extends StatefulWidget {
 
 class _CropEditorWidgetState extends State<CropEditorWidget> {
   final _cropController = CropController();
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  @override
+  void didUpdateWidget(covariant CropEditorWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(widget.image != oldWidget.image ||
+    widget.aspectRatio != oldWidget.aspectRatio ||
+    widget.withCircleUi != oldWidget.withCircleUi) {
+      _init();
+    }
+  }
+
+  _init() {
+    _loading = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
+      child: _loading ? const LoadingView() : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -50,8 +72,18 @@ class _CropEditorWidgetState extends State<CropEditorWidget> {
                     shape: const BeveledRectangleBorder(
                     ),
                   ),
-                  onPressed: () async {
+                  onPressed: () {
+                    if(!mounted || _loading) return;
+
+                    setState(() {
+                      _loading = true;
+                    });
                     widget.withCircleUi ? _cropController.cropCircle() : _cropController.crop();
+
+                    if(!mounted) return;
+                    setState(() {
+                      _loading = false;
+                    });
                   },
                   child: Padding(
                       padding: const EdgeInsets.all(20),
