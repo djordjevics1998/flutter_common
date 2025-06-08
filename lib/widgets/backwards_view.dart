@@ -5,10 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-typedef OnBackPressed = Future<bool> Function(BuildContext context);
+typedef OnBackPressed = bool Function(BuildContext context);
 
 class BackwardsView extends StatelessWidget {
-  final OnBackPressed onBackPressed;
+  final OnBackPressed? onBackPressed;
   final Widget child;
 
   const BackwardsView(
@@ -16,10 +16,10 @@ class BackwardsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return kIsWeb || (!Platform.isAndroid && !Platform.isIOS)
+    return kIsWeb || (!Platform.isAndroid && !Platform.isIOS) || onBackPressed == null
         ? child
         : (Platform.isAndroid
-        ? _AndroidBackButton(onBackPressed: onBackPressed, child: child)
+        ? _AndroidBackButton(onBackPressed: onBackPressed!, child: child)
         : GestureDetector(
         onHorizontalDragUpdate: (details) async {
           //set the sensitivity for your ios gesture anywhere between 10-50 is good
@@ -28,7 +28,7 @@ class BackwardsView extends StatelessWidget {
 
           if (details.delta.dx > sensitivity) {
             // SWIPE FROM RIGHT DETECTION
-            await onBackPressed.call(context);
+            await onBackPressed!.call(context);
           }
         },
         child: child));
