@@ -78,11 +78,13 @@ class _CropEditorWidgetState extends State<CropEditorWidget> {
                     setState(() {
                       _loading = true;
                     });
-                    widget.withCircleUi ? _cropController.cropCircle() : _cropController.crop();
+                    Future.microtask(() {
+                      widget.withCircleUi ? _cropController.cropCircle() : _cropController.crop();
 
-                    if(!mounted) return;
-                    setState(() {
-                      _loading = false;
+                      if(!mounted) return;
+                      setState(() {
+                        _loading = false;
+                      });
                     });
                   },
                   child: Padding(
