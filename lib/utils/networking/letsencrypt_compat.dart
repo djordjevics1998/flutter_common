@@ -67,7 +67,8 @@ Future<T> withClientCompat<T>(Future<T> Function(http.Client) fn) async {
   try {
     return await fn(client);
   } finally {
-    client.close();
+    Future.delayed(const Duration(seconds: 1), () => client.close(),);
+    //client.close();
   }
 }
 
