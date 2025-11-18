@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const httpStatusCodeOk = 200,
     httpStatusCodeBadRequest = 400,
     httpStatusCodeUnauthorizedRequest = 401,
+    httpStatusCodeForbidden = 403,
     httpStatusCodeNotFound = 404,
     httpStatusCodeTimeout = 408,
     httpStatusCodeServerInternalError = 500,
