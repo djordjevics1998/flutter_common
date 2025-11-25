@@ -38,10 +38,16 @@ void goOrReplaceByRouter(GoRouter router, String route, {Map<String, String> pat
 
     //Router.neglect(, () => router.pushReplacement(loc));
 
-    while (router.canPop() == true) {
+
+    // Stari nacin
+    /*while (router.canPop() == true) {
       router.pop();
     }
-    Router.neglect(router.routerDelegate.navigatorKey.currentContext!, () => router.push(loc, extra: DateTime.now().microsecondsSinceEpoch),);
+    Router.neglect(router.routerDelegate.navigatorKey.currentContext!, () => router.push(loc, extra: DateTime.now().microsecondsSinceEpoch),);*/
+
+    router.routerDelegate.popRoute().then((v) {
+      Router.neglect(router.routerDelegate.navigatorKey.currentContext!, () => router.push(loc, extra: DateTime.now().microsecondsSinceEpoch),);
+    });
 
     //Router.neglect(router.routerDelegate.navigatorKey.currentContext!, () => router.push(loc));
     //router.pop();
