@@ -7,14 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 
 Future<http.Response> get(Uri url,
-    {Map<String, String>? headers}) =>
+    {Map<String, String>? headers, Duration? connectionTimeout}) =>
     withClientCompat((client) =>
-        client.get(url, headers: headers));
+        client.get(url, headers: headers), connectionTimeout: connectionTimeout);
 
 Future<http.Response> post(Uri url,
-    {Map<String, String>? headers, Object? body, Encoding? encoding}) =>
+    {Map<String, String>? headers, Object? body, Encoding? encoding, Duration? connectionTimeout}) =>
     withClientCompat((client) =>
-        client.post(url, headers: headers, body: body, encoding: encoding));
+        client.post(url, headers: headers, body: body, encoding: encoding), connectionTimeout: connectionTimeout);
 
 Future<bool> _isDeviceLegacy() async {
   if (!kIsWeb && (Platform.isAndroid || Platform.isWindows)) {
@@ -62,8 +62,8 @@ Future<SecurityContext> _getSecurityContext() async {
   return context;
 }
 
-Future<T> withClientCompat<T>(Future<T> Function(http.Client) fn) async {
-  final http.Client client = !kIsWeb ? IOClient(HttpClient(context: await _getSecurityContext())) : http.Client();
+Future<T> withClientCompat<T>(Future<T> Function(http.Client) fn, {Duration? connectionTimeout}) async {
+  final http.Client client = !kIsWeb ? IOClient(HttpClient(context: await _getSecurityContext())..connectionTimeout = connectionTimeout) : http.Client();
   try {
     return await fn(client);
   } finally {
