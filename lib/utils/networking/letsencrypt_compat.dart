@@ -36,6 +36,7 @@ final Set<CertificateAuthority> _authorities = {};
 
 Future<void> initAuthorities({List<CertificateAuthority> authorities = const []}) async {
   if(kIsWeb) return;
+  _authorities.clear();
   _authorities.addAll(authorities);
   _getSecurityContext();
 }
