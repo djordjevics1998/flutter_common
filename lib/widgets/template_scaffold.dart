@@ -18,11 +18,12 @@ abstract class TemplateScaffold extends StatelessWidget {
   final Widget Function(BuildContext context, Widget body) onGenerateBodyInjection;
   final Widget? floatingActionButton;
   final Widget Function(BuildContext context)? onGenerateAppbarLeading;
+  final double? menuSize;
 
   const TemplateScaffold({super.key, required this.onBackPressed, this.tabTitle, this.onGenerateDefaultTabTitle = _defaultOnGenerateDefaultTitle,
     this.appbarTitle, this.onGenerateDefaultAppbarTitle = _defaultOnGenerateDefaultTitle, this.onAppbarTitlePressed, this.onDefaultAppbarTitlePressed, this.onGenerateAppbarLeading, required this.body, this.onlyBackButton = false, this.hideAllActions = false,
     this.hideAppBar = false,
-    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateActionsList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget, this.floatingActionButton});
+    this.minDisplayTopBarWidgetsWidth = 0, this.onGenerateDrawerList = _defaultOnGenerateWidgetList, this.onGenerateTopBarList = _defaultOnGenerateWidgetList, this.onGenerateActionsList = _defaultOnGenerateWidgetList, this.onGenerateBodyInjection = _defaultOnGenerateWidget, this.floatingActionButton, this.menuSize});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,15 @@ abstract class TemplateScaffold extends StatelessWidget {
           ),
         ),
           appBar: hideAppBar ? null : AppBar(
-              leading: onlyBackButton && !hideAllActions ? IconButton(onPressed: () => onBackPressed(context), icon: const Icon(Icons.arrow_back)) : null,
+              leading: onlyBackButton && !hideAllActions ? IconButton(onPressed: () => onBackPressed(context), icon: const Icon(Icons.arrow_back)) : Builder(
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: Icon(Icons.menu, size: menuSize,),
+                    onPressed: () { Scaffold.of(context).openDrawer(); },
+                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  );
+                },
+              ),
               titleSpacing: 0,
               title: LayoutBuilder(builder: (context, constraints) =>
                   Wrap(crossAxisAlignment: WrapCrossAlignment.center,
